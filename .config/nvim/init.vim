@@ -1,11 +1,10 @@
 " Basic Settings
 set nocompatible
 filetype indent plugin on
-
+set shell=/bin/fish
 syntax on
 set encoding=utf-8
 set hidden
-"set clipboard=unnamedplus
 set wildmenu
 set showcmd
 set hlsearch
@@ -24,18 +23,19 @@ set t_vb=
 set mouse=a
 set cmdheight=1
 set number
+set relativenumber
 set notimeout ttimeout ttimeoutlen=200
 set pastetoggle=<F11>
 set shiftwidth=4
 set softtabstop=4
 set expandtab
 set conceallevel=2
-
+set splitbelow
 set wrap
 set breakindent
 set linebreak
 set sidescroll=1
-"set whichwrap+=h,l
+set whichwrap+=h,l
 set fillchars+=vert:│
 
 
@@ -47,7 +47,10 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-tnoremap <Esc> <C-\><C-n>
+if has("nvim")
+    au TermOpen * tnoremap <Esc> <c-\><c-n>
+    au FileType fzf tunmap <Esc>
+endif
 nnoremap <C-W>h <C-W>s
 
 nnoremap <A-h> :tabprevious<CR>                                                                            
@@ -59,53 +62,60 @@ vnoremap <C-X> "+c
 vnoremap <C-C> "+y
 vnoremap <C-V> "+p
 
+noremap <Leader>tN :tabnew<CR>
+noremap <Leader>tc :tabclose<CR>
+noremap <Leader>tm :tabmove<CR>
+noremap <Leader>tn :tabnext<CR>
+noremap <Leader>tp :tabprevious<CR>
+
 
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
-Plug 'lervag/vimtex'
-Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
-
-Plug 'ehamberg/vim-cute-python', {'branch': 'moresymbols'}
-Plug 'scrooloose/nerdcommenter'
-Plug 'rbgrouleff/bclose.vim' " dep for ranger.vim
-Plug 'francoiscabrol/ranger.vim'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'majutsushi/tagbar'
-
-Plug 'chrisbra/unicode.vim'
-Plug 'ryanoasis/vim-devicons'
-"Plug 'yggdroot/indentline'
-"Plug 'godlygeek/tabular'
-"
-"Plug 'plasticboy/vim-markdown'
-Plug 'gabrielelana/vim-markdown'
-Plug 'iamcco/mathjax-support-for-mkdp'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-
-Plug 'kien/ctrlp.vim'
-Plug 'mileszs/ack.vim'
-Plug 'easymotion/vim-easymotion'
-
+Plug 'dag/vim-fish'
+Plug 'edkolev/promptline.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'edkolev/tmuxline.vim'
-Plug 'edkolev/promptline.vim'
 
+Plug 'rbgrouleff/bclose.vim'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'majutsushi/tagbar'
+Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'
+
+Plug 'ap/vim-css-color'
+Plug 'ehamberg/vim-cute-python', {'branch': 'moresymbols'}
+Plug 'chrisbra/unicode.vim'
+Plug 'ryanoasis/vim-devicons'
+
+Plug 'scrooloose/nerdcommenter'
+Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'skywind3000/asyncrun.vim'
+"Plug 'yggdroot/indentline'
 
+Plug 'lervag/vimtex'
+Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
+
+"Plug 'plasticboy/vim-markdown'
+"Plug 'gabrielelana/vim-markdown'
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'dkarter/bullets.vim'
+
+Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 "Plug 'Konfekt/FastFold'
-Plug 'davidhalter/jedi-vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'chiel92/vim-autoformat'
 Plug 'w0rp/ale'
-Plug 'mhinz/vim-startify'
 
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
@@ -115,6 +125,24 @@ Plug 'Ron89/thesaurus_query.vim'
 Plug 'rhysd/vim-grammarous'
 call plug#end()
 
+
+" General
+cnoremap <Down> <Nop>
+cnoremap <Left> <Nop>
+cnoremap <Right> <Nop>
+cnoremap <Up> <Nop>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Up> <Nop>
+nnoremap <Down> <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <Up> <Nop>
+vnoremap <Down> <Nop>
+vnoremap <Left> <Nop>
+vnoremap <Right> <Nop>
+vnoremap <Up> <Nop>
 
 let g:asyncrun_open = 8
 
@@ -148,6 +176,7 @@ let g:startify_custom_header = [
 
 
 " LaTeX
+let g:vimtex_latexmk_progname = 'nvr'
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
@@ -167,9 +196,25 @@ let g:tex_indent_ifelsefi = 1
 let g:tex_indent_and=1
 let g:tex_conceal="abdgm"
 
+
+" Markdown
+nnoremap <f5> :MarkdownPreview<cr>
+"let g:mkdp_auto_start = 1
+let g:mkdp_page_title = '${name}'
+let g:mkdx#settings = { 'highlight': { 'enable': 1 },
+                        \ 'enter': { 'shift': 1 },
+                        \ 'links': { 'external': { 'enable': 1 } },
+                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
+                        \ 'fold': { 'enable': 1 } }
+autocmd FileType org,markdown :TableModeToggle
+
+
+" YCM
+let g:ycm_autoclose_preview_window_after_completion = 1
 if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
 endif
+
 au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 let g:ycm_semantic_triggers.tex = [
             \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
@@ -182,53 +227,34 @@ let g:ycm_semantic_triggers.tex = [
             \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
             \ ]
 
-
-" Markdown
-let vim_markdown_preview_hotkey='<F5>'
-let g:vim_markdown_folding_disabled = 1
-let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
-                        \ 'enter': { 'shift': 1 },
-                        \ 'links': { 'external': { 'enable': 1 } },
-                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
-                        \ 'fold': { 'enable': 1 } }
-
-let g:ackprg = 'ag --vimgrep --smart-case'
-cnoreabbrev ag Ack
-cnoreabbrev aG Ack
-cnoreabbrev Ag Ack
-cnoreabbrev AG Ack
+let g:ycm_python_binary_path = 'python3'
+let g:ycm_semantic_triggers.python = ['re!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)'] 
 
 
-" Autocompletion and Snippets and Autoformat
-let g:ycm_autoclose_preview_window_after_completion = 1
-
+" UltiSnips & ALE
 let g:UltiSnipsExpandTrigger = "<c-space>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 let g:ale_set_balloons = 1
-
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#completions_enabled = 0
-let g:jedi#completions_command = ""
-let g:jedi#show_call_signatures = "1"
-let g:jedi#goto_assignments_command = "<leader>pa"
-let g:jedi#goto_definitions_command = "<leader>pd"
-let g:jedi#documentation_command = "<leader>pk"
-let g:jedi#usages_command = "<leader>pu"
-let g:jedi#rename_command = "<leader>pr"
+let g:ale_hover_to_preview =1
+let g:ale_fixers = {'tex': ['latexindent'], 'python':['autopep8']}
+ let g:ale_set_highlights=0
 
 
 " Search and Navigation
 nnoremap <leader>nf :RangerNewTab<CR>
+nnoremap <c-p> :Files<cr>
+
+let g:ackprg = 'ag --nogroup --column'
+cnoreabbrev ag Ack
 
 
 " Language and Writing
 setlocal spell
 set spelllang=de,en_gb
-inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+inoremap <c-f> <c-g>u<Esc>[s1z=`]a<c-g>u
+nnoremap <c-f> [s1z=<c-o>
 
 let g:tq_language=['en', 'de']
 let g:tq_map_keys=0
@@ -246,7 +272,17 @@ highlight Normal ctermbg=None
 set guifont=DejaVuSansMono\ Nerd\ Font:s10
 "let g:indentLine_char = '│'
 
-let g:airline_theme='base16'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#show_tab_type = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#tab_min_count = 2
+
+let g:airline_theme='base16_gruvbox_dark_hard'
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -273,3 +309,9 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
+if !filereadable(".promptline.sh")
+    autocmd VimEnter * PromptlineSnapshot! ~/.promptline.sh airline
+endif
+if !filereadable(".tmuxline.conf")
+    autocmd VimEnter * TmuxlineSnapshot! ~/.tmuxline.conf
+endif
