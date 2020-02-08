@@ -1,39 +1,8 @@
-##############################################################################
-## This is the example configuration file. Copy it to $HOME/.ncmpcpp/config ##
-## or $XDG_CONFIG_HOME/ncmpcpp/config and set up your preferences.          ##
-##############################################################################
-#
-##### directories ######
-##
-## Directory for storing ncmpcpp related files.  Changing it is useful if you
-## want to store everything somewhere else and provide command line setting for
-## alternative location to config file which defines that while launching
-## ncmpcpp.
-##
-#
 ncmpcpp_directory = ~/.ncmpcpp
-#
-##
-## Directory for storing downloaded lyrics. It defaults to ~/.lyrics since other
-## MPD clients (eg. ncmpc) also use that location.
-##
-#
 #lyrics_directory = ~/.lyrics
-#
-##### connection settings #####
-#
 mpd_host = localhost
-#
 mpd_port = 6600
-#
-#mpd_connection_timeout = 5
-#
-## Needed for tag editor and file operations to work.
-##
 mpd_music_dir = /run/media/lnlcflx/DATA/Music/
-#
-#mpd_crossfade_time = 5
-#
 ##### music visualizer #####
 ##
 ## Note: In order to make music visualizer work you'll need to use mpd fifo
@@ -80,9 +49,9 @@ mpd_music_dir = /run/media/lnlcflx/DATA/Music/
 #
 ## Available values: spectrum, wave, wave_filled, ellipse.
 ##
-#visualizer_type = wave
+visualizer_type = spectrum
 #
-#visualizer_look = ●▮
+visualizer_look = ▌▎
 #
 #visualizer_color = blue, cyan, green, yellow, magenta, red
 #

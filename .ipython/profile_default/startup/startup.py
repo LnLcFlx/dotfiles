@@ -1,5 +1,5 @@
 from sympy.abc import *
-
+from fractions import *
 import cmath, math
 from math import *
 import sympy as sp
@@ -8,6 +8,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from pint import UnitRegistry
 from scipy import constants as const
+import uncertainties as uncert
 
 unit = UnitRegistry()
 init_printing(print_builtin=False,use_latex=False)#forecolor="White", fontsize=8)

@@ -75,7 +75,7 @@ Plug 'dag/vim-fish'
 Plug 'edkolev/promptline.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmux-plugins/vim-tmux'
-Plug 'edkolev/tmuxline.vim'
+"Plug 'edkolev/tmuxline.vim'
 
 Plug 'rbgrouleff/bclose.vim'
 Plug 'francoiscabrol/ranger.vim'
@@ -108,6 +108,7 @@ Plug 'dkarter/bullets.vim'
 
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-rhubarb'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
@@ -123,28 +124,31 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'Ron89/thesaurus_query.vim'
 Plug 'rhysd/vim-grammarous'
+
+Plug 'vim-scripts/Arduino-syntax-file'
 call plug#end()
 
 
 " General
-cnoremap <Down> <Nop>
-cnoremap <Left> <Nop>
-cnoremap <Right> <Nop>
-cnoremap <Up> <Nop>
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
-inoremap <Up> <Nop>
-nnoremap <Down> <Nop>
-nnoremap <Left> <Nop>
-nnoremap <Right> <Nop>
-nnoremap <Up> <Nop>
-vnoremap <Down> <Nop>
-vnoremap <Left> <Nop>
-vnoremap <Right> <Nop>
-vnoremap <Up> <Nop>
+"inoremap <Down> <Nop>
+"inoremap <Left> <Nop>
+"inoremap <Right> <Nop>
+"inoremap <Up> <Nop>
+"nnoremap <Down> <Nop>
+"nnoremap <Left> <Nop>
+"nnoremap <Right> <Nop>
+"nnoremap <Up> <Nop>
+"vnoremap <Down> <Nop>
+"vnoremap <Left> <Nop>
+"vnoremap <Right> <Nop>
+"vnoremap <Up> <Nop>
 
+let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
 let g:asyncrun_open = 8
+autocmd FileType md nnoremap <f5> :MarkdownPreview<cr>
+autocmd FileType python nnoremap <f5> :AsyncRun python %<cr>
+autocmd FileType tex nnoremap <f5> :VimtexCompile<cr>
+"autocmd Filetype arduino nnoremap <f5> :AsyncRun -S cd ..; sudo make upload; sudo platformio device monitor;<cr>
 
 
 " Startify
@@ -181,6 +185,7 @@ let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
 let g:vimtex_fold_manual=1
+let g:vimtex_quickfix_ignore_all_warnings = 0
 let g:vimtex_quickfix_open_on_warning = 0
 
 let g:formatdef_latexindent = '"latexindent"'
@@ -198,8 +203,6 @@ let g:tex_conceal="abdgm"
 
 
 " Markdown
-nnoremap <f5> :MarkdownPreview<cr>
-"let g:mkdp_auto_start = 1
 let g:mkdp_page_title = '${name}'
 let g:mkdx#settings = { 'highlight': { 'enable': 1 },
                         \ 'enter': { 'shift': 1 },
@@ -267,7 +270,7 @@ vnoremap <silent> <LocalLeader>ct "ky:ThesaurusQueryReplace <C-r>k<CR>
 " Appearance
 colo gruvbox
 set bg=dark
-let g:gruvbox_contrast = 'medium'
+"let g:gruvbox_contrast_dark = 'soft'
 highlight Normal ctermbg=None
 set guifont=DejaVuSansMono\ Nerd\ Font:s10
 "let g:indentLine_char = '│'
@@ -312,6 +315,6 @@ let g:airline_symbols.linenr = ''
 if !filereadable(".promptline.sh")
     autocmd VimEnter * PromptlineSnapshot! ~/.promptline.sh airline
 endif
-if !filereadable(".tmuxline.conf")
-    autocmd VimEnter * TmuxlineSnapshot! ~/.tmuxline.conf
-endif
+"if !filereadable(".tmuxline.conf")
+    "autocmd VimEnter * TmuxlineSnapshot! ~/.tmuxline.conf
+"endif

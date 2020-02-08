@@ -1,0 +1,30 @@
+auto-reload yes
+reload-time 45
+browser w3m
+
+unbind-key j
+unbind-key k
+unbind-key J
+unbind-key K
+unbind-key G
+unbind-key g
+bind-key j down
+bind-key k up
+bind-key l open
+bind-key h quit
+bind-key J next
+bind-key K prev
+bind-key g home
+bind-key G end
+bind-key d pagedown
+bind-key u pageup
+bind-key s sort
+bind-key S rev-sort
+
+color background            color223     default
+color listnormal            color250     default
+color listnormal_unread     color223     default    bold
+color listfocus             color250     color239
+color listfocus_unread      color223     color239   bold
+color info                  color166     default    bold
+color article               color223     default
