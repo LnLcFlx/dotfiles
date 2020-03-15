@@ -1,6 +1,7 @@
 fish_vi_key_bindings
 set -gx PATH ~/scripts/ $PATH
 set -x BROWSER chromium
+set -x TERM tmux-256color
 set -x EDITOR nvim
 set DATA /run/media/lnlcflx/DATA/
 set HSERVER /media/homeserver/
@@ -38,9 +39,14 @@ function fish_right_prompt
   env FISH_VERSION=$FISH_VERSION PROMPTLINE_LAST_EXIT_CODE=$status bash ~/.promptline.sh right
 end
 
+alias cl='clear'
 alias ls='lsd'
 alias config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
-alias wttr='curl v2.wttr.in/Heidelberg\?lang=de'
+alias wttr='curl wttr.in/Heidelberg\?lang=de'
+alias wttr2='curl v2.wttr.in/Heidelberg\?lang=de'
+alias rofi-calc='rofi -show calc -modi calc -no-show-match -no-sort'
+alias rofi-power='~/.config/rofi/scripts/powermenu.sh'
+alias rofi-mpd='~/.config/rofi/scripts/mpd.sh'
 
 abbr ipy "jupyter console"
 abbr pac "sudo pacman"

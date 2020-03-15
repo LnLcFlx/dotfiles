@@ -16,7 +16,7 @@ set nostartofline
 set ruler
 set laststatus=2
 set cursorline
-set cursorcolumn
+"set cursorcolumn
 set confirm
 set visualbell
 set t_vb=
@@ -89,7 +89,7 @@ Plug 'chrisbra/unicode.vim'
 Plug 'ryanoasis/vim-devicons'
 
 Plug 'scrooloose/nerdcommenter'
-Plug 'easymotion/vim-easymotion'
+"Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -119,6 +119,7 @@ Plug 'chiel92/vim-autoformat'
 Plug 'w0rp/ale'
 
 Plug 'morhetz/gruvbox'
+"Plug 'dylanaraps/wal.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -148,34 +149,35 @@ let g:asyncrun_open = 8
 autocmd FileType md nnoremap <f5> :MarkdownPreview<cr>
 autocmd FileType python nnoremap <f5> :AsyncRun python %<cr>
 autocmd FileType tex nnoremap <f5> :VimtexCompile<cr>
+autocmd FileType bib command -nargs=1 Doi2bib read !doi2bib <args>
 "autocmd Filetype arduino nnoremap <f5> :AsyncRun -S cd ..; sudo make upload; sudo platformio device monitor;<cr>
 
 
 " Startify
-let g:startify_bookmarks= [{'c': '~/.config/nvim/init.vim'}, {'s': '~/setup.sh'}] ", {'t': '~/.tmux.conf'}]
+let g:startify_bookmarks= [{'c': '~/.config/nvim/init.vim'}, {'i': '~/install.md'}, {'e': '~/.local/share/konsole/Default.profile'}, {'t': '~/.tmux.conf'}]
 function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
 let g:startify_custom_header = [
-            \'                    .                    ',
-            \'    ##############..... ##############   ',
-            \'    ##############......##############   ',
-            \'      ##########..........##########     ',
-            \'      ##########........##########       ',
-            \'      ##########.......##########        ',
-            \'      ##########.....##########..        ',
-            \'      ##########....##########.....      ',
-            \'    ..##########..##########.........    ',
-            \'  ....##########.#########.............  ',
-            \'    ..################JJJ............    ',
-            \'      ################.............      ',
-            \'      ##############.JJJ.JJJJJJJJJJ      ',
-            \'      ############...JJ...JJ..JJ  JJ     ',
-            \'      ##########....JJ...JJ..JJ  JJ      ',
-            \'      ########......JJJ..JJJ JJJ JJJ     ',
-            \'      ######    .........                ',
-            \'                  .....                  ',
-            \'                    .                    '
+            \'                    ▒                    ',
+            \'    ██████████████▒▒▒▒▒ ██████████████   ',
+            \'    ██████████████▒▒▒▒▒▒██████████████   ',
+            \'      ██████████▒▒▒▒▒▒▒▒▒▒██████████     ',
+            \'      ██████████▒▒▒▒▒▒▒▒██████████       ',
+            \'      ██████████▒▒▒▒▒▒▒██████████        ',
+            \'      ██████████▒▒▒▒▒██████████▒▒        ',
+            \'      ██████████▒▒▒▒██████████▒▒▒▒▒      ',
+            \'    ▒▒██████████▒▒██████████▒▒▒▒▒▒▒▒▒    ',
+            \'  ▒▒▒▒██████████▒█████████▒▒▒▒▒▒▒▒▒▒▒▒▒  ',
+            \'    ▒▒████████████████▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒    ',
+            \'      ████████████████▒▒▒▒▒▒▒▒▒▒▒▒▒      ',
+            \'      ██████████████▒▓▓▓▒▓▓▓▓▓▓▓▓▓▓      ',
+            \'      ████████████▒▒▒▓▓▒▒▒▓▓▒▒▓▓  ▓▓     ',
+            \'      ██████████▒▒▒▒▓▓▒▒▒▓▓▒▒▓▓  ▓▓      ',
+            \'      ████████▒▒▒▒▒▒▓▓▓▒▒▓▓▓ ▓▓▓ ▓▓▓     ',
+            \'      ██████    ▒▒▒▒▒▒▒▒▒                ',
+            \'                  ▒▒▒▒▒                  ',
+            \'                    ▒                    '
             \]
 
 
@@ -254,7 +256,7 @@ cnoreabbrev ag Ack
 
 
 " Language and Writing
-setlocal spell
+set spell
 set spelllang=de,en_gb
 inoremap <c-f> <c-g>u<Esc>[s1z=`]a<c-g>u
 nnoremap <c-f> [s1z=<c-o>
@@ -266,13 +268,17 @@ vnoremap <unique><silent> <Leader>ct "ky:ThesaurusQueryReplace <C-r>k<CR>
 nnoremap <silent> <LocalLeader>ct :ThesaurusQueryReplaceCurrentWord<CR>
 vnoremap <silent> <LocalLeader>ct "ky:ThesaurusQueryReplace <C-r>k<CR>
 
+autocmd BufEnter /usr/share/nvim/runtime/doc/*.txt set nospell
+autocmd TermOpen * set nospell
+
 
 " Appearance
+"color wal
 colo gruvbox
 set bg=dark
 "let g:gruvbox_contrast_dark = 'soft'
 highlight Normal ctermbg=None
-set guifont=DejaVuSansMono\ Nerd\ Font:s10
+set guifont=Iosevka\ Nerd\ Font:s12
 "let g:indentLine_char = '│'
 
 let g:airline#extensions#tabline#enabled = 1

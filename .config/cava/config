@@ -1,0 +1,21 @@
+[general]
+mode = fifo
+autosens = 1
+overshoot = 0
+
+[input]
+method = fifo
+source = /tmp/mpd.fifo
+
+[output]
+#
+
+[color]
+foreground = yellow
+
+[smoothing]
+integral = 50
+gravity = 100
+
+[eq]
+#

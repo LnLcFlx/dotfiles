@@ -15,9 +15,6 @@ endglobal
 
 
 snippet article "Article template" b
-% !TEX encoding = UTF-8
-% !TEX spellcheck = de_DE
-
 \documentclass{${0:article}}
 
 \usepackage[utf8]{inputenc}% ä in Titel
@@ -32,6 +29,26 @@ ${2:\tableofcontents}
 
 \end{document}
 endsnippet
+
+snippet letter "Letter template" b
+\documentclass[/home/lnlcflx/tex/letter]{scrlttr2}
+
+\usepackage{import}\import{/home/lnlcflx/tex/}{default.tex}
+
+\begin{document}
+
+\begin{letter}{${1:Max Mustermann}}
+    \setkomavar{subject}{$2}
+    \opening{${3:Sehr geehrte Damen und Herren,}}
+
+    $5
+
+    \closing{${4:Mit freundlichen Grüßen}}
+\end{letter}
+
+\end{document}
+endsnippet
+
 
 
 priority 100

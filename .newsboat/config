@@ -1,6 +1,7 @@
 auto-reload yes
 reload-time 45
-browser w3m
+browser chromium
+#article-sort-order date asc
 
 unbind-key j
 unbind-key k
