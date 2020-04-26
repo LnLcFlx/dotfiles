@@ -1,0 +1,337 @@
+[colors]
+background = ${xrdb:color0:#282828}
+background-alt = ${xrdb:color1:#1d2021}
+foreground = ${xrdb:color7:#ebdbb2}
+foreground-alt = ${xrdb:color8:#a89984}
+primary = ${xrdb:color1:#fe8019}
+secondary = ${xrdb:color2:#b16286}
+alert = ${xrdb:color3:#fb4934}
+
+[bar/default]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 35
+fixed-center = false
+background = ${colors.background}
+foreground = ${colors.foreground}
+line-size = 3
+line-color = ${colors.primary}
+border-color = #00000000
+padding-left = 3
+padding-right = 3
+module-margin-left = 1
+module-margin-right = 2
+font-0 = Noto Sans:pixelsize=12;1
+font-1 = Noto Color Emoji:style=Regular:scale=12:antialias=false:size=1;2
+font-2 = JetBrains Mono Nerd Font:pixelsize=12
+font-3 = JetBrains Mono Medium Medium Nerd Font Complete Mono:pixelsize=12
+modules-left = bspwm
+modules-center = mpd
+modules-right = weather xbacklight pulseaudio updates mail cpu memory bluetooth vpn wlan eth battery temperature date powermenu
+tray-position = right
+tray-padding = 4
+wm-restack = bspwm
+;override-redirect = true
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/updates]
+type = custom/script
+exec = updates
+format-prefix = "ﮮ  "
+format-prefix-color = ${colors.foreground-alt}
+format-underline = ${color.primary}
+click-left = kitty /bin/bash -c 'sudo pacman -Syu' &
+interval = 300
+
+[module/mail]
+type = custom/script
+exec = mail-count
+format-prefix = "  "
+format-prefix-color = ${colors.foreground-alt}
+format-underline = ${colors.primary}
+click-left = kitty /bin/bash -c neomutt &
+interval = 120
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-underline = ${colors.secondary}
+label-layout = %layout%
+label-layout-underline = ${colors.secondary}
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+mount-0 = /
+mount-1 = /run/media/data
+mount-2 = /run/media/backup
+label-mounted = %{T2}💾%{T-}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted =
+;label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/bspwm]
+type = internal/bspwm
+format = "%{F#1793D1}%{F-}   <label-state>"
+label-focused = %index%
+label-focused-background = ${colors.background-alt}
+label-focused-underline= ${colors.primary}
+label-focused-padding = 2
+label-occupied = %index%
+label-occupied-padding = 2
+label-urgent = %index%!
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+label-empty = %index%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 2
+; Separator in between workspaces
+; label-separator = |
+
+[module/mpd]
+type = internal/mpd
+host = 10.0.0.26
+label-song = %artist% - %title%
+format-online =   <label-song> <icon-prev> <icon-stop> <toggle> <icon-next>
+format-offline = "  mpd offline"
+icon-prev = "  "
+icon-stop = "  "
+icon-play = "  "
+icon-pause = "  "
+icon-next = "   "
+label-song-maxlen = 75
+label-song-ellipsis = true
+
+[module/weather]
+type = custom/script
+exec = curl -s 'wttr.in/Heidelberg\?format=%c%20%t%20%p&lang=de' | cut -c 1-20
+click-left = kitty /bin/bash -c 'wttr' &
+interval = 120
+
+[module/redshift]
+type = custom/script
+exec = redshift-status
+format-underline = ${colors.primary}
+interval = 5
+
+[module/xbacklight]
+type = internal/xbacklight
+format = <label> <bar>
+label = "ﯦ "
+bar-width = 10
+bar-indicator = │
+bar-indicator-foreground = ${colors.foreground}
+bar-indicator-font = 3
+bar-fill = ─
+bar-fill-font = 3
+bar-fill-foreground = ${colors.primary}
+bar-empty = ─
+bar-empty-font = 3
+bar-empty-foreground = ${colors.foreground-alt}
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.primary}
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.primary}
+label = %percentage_used%%
+;label = %gb_used%/%gb_total%
+
+[module/bluetooth]
+type = custom/script
+exec = bluetooth-status
+format-prefix = "  "
+format-prefix-color = ${colors.foreground-alt}
+format-underline = ${colors.primary}
+interval = 2
+
+[module/vpn]
+type = custom/script
+exec = vpn-status
+format-prefix = "嬨  "
+format-prefix-color = ${colors.foreground-alt}
+format-underline = ${colors.primary}
+click-left = kitty bash -c 'nmtui connect' &
+interval = 5
+
+[module/wlan]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+format-connected = <ramp-signal> <label-connected>
+format-connected-underline = ${colors.primary}
+label-connected = %essid%
+format-disconnected = " "
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+ramp-signal-0 = %{T3}▁▁▁▁
+ramp-signal-1 = %{T3}▂▁▁▁
+ramp-signal-2 = %{T3}▂▄▁▁
+ramp-signal-3 = %{T3}▂▄▆▁
+ramp-signal-4 = %{T3}▂▄▆█
+ramp-signal-foreground = ${colors.foreground-alt}
+
+[module/eth]
+type = internal/network
+interface = enp2s0
+interval = 3.0
+format-connected-underline = ${colors.primary}
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/date]
+type = internal/date
+interval = 1
+date = " %d.%m.%Y"
+date-alt = " %a %d.%m.%Y"
+time = %H:%M
+time-alt = %H:%M:%S
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.primary}
+label = %date% - %time%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+format-volume = <label-volume> <bar-volume>
+label-volume =    %percentage%%
+label-volume-foreground = ${root.foreground}
+label-muted =    muted
+label-muted-foreground = #666
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.primary}
+bar-volume-foreground-1 = ${colors.primary}
+bar-volume-foreground-2 = ${colors.primary}
+bar-volume-foreground-3 = ${colors.primary}
+bar-volume-foreground-4 = ${colors.primary}
+bar-volume-foreground-5 = ${colors.secondary}
+bar-volume-foreground-6 = ${colors.alert}
+bar-volume-gradient = false
+bar-volume-indicator = │
+bar-volume-indicator-font = 3
+bar-volume-fill = ─
+bar-volume-fill-font = 3
+bar-volume-empty = ─
+bar-volume-empty-font = 3
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/alsa]
+type = internal/alsa
+format-volume = <label-volume> <bar-volume>
+label-volume =  
+label-volume-foreground = ${root.foreground}
+format-muted-prefix = " "
+format-muted-foreground = ${colors.foreground-alt}
+label-muted = sound muted
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.primary}
+bar-volume-foreground-1 = ${colors.primary}
+bar-volume-foreground-2 = ${colors.primary}
+bar-volume-foreground-3 = ${colors.primary}
+bar-volume-foreground-4 = ${colors.primary}
+bar-volume-foreground-5 = ${colors.secondary}
+bar-volume-foreground-6 = ${colors.alert}
+bar-volume-gradient = false
+bar-volume-indicator = │
+bar-volume-indicator-font = 3
+bar-volume-fill = ─
+bar-volume-fill-font = 3
+bar-volume-empty = ─
+bar-volume-empty-font = 3
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = ACAD
+full-at = 98
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = ${colors.primary}
+format-discharging = <animation-discharging> <label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.foreground-alt}
+format-full-underline = ${self.format-charging-underline}
+ramp-capacity-0 = 1
+ramp-capacity-1 = 2
+ramp-capacity-2 = 3
+ramp-capacity-foreground = ${colors.foreground-alt}
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-framerate = 750
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-foreground = ${colors.foreground-alt}
+animation-discharging-framerate = 750
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+format = <ramp> <label>
+format-underline = ${colors.primary}
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${self.format-underline}
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.secondary}
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colors.foreground-alt}
+
+[module/powermenu]
+type = custom/text
+content = "⏻ "
+click-left = rofi-power
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+; vim:ft=dosini

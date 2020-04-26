@@ -1,0 +1,6 @@
+text/plain; $EDITOR %s ;
+text/html; nohup $BROWSER %s > /dev/null 2>&1 & ; nametemplate=%s.html
+image/*; xdg-open %s ;
+video/*; mpv --quiet %s &; copiousoutput
+application/pdf; xdg-open %s ;
+application/pgp-encrypted; gpg -d '%s'; copiousoutput;

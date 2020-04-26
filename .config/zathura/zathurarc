@@ -1,0 +1,20 @@
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 1
+map u scroll half-up
+map d scroll half-down
+map D toggle_page_mode
+map r reload
+map R rotate
+map J zoom out
+map K zoom in
+map i recolor
+map p print
+
+set selection-clipboard clipboard
+
+#set recolor true
+set default-bg "#282828" # rgba(40,40,40,0.8)
+set recolor-lightcolor "#282828" # rgba(40,40,40,0)
+set recolor-darkcolor "#ebdbb2" # rgba(250,250,250,1)
+set adjust-open "width"

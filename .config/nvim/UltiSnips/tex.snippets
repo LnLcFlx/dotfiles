@@ -15,17 +15,17 @@ endglobal
 
 
 snippet article "Article template" b
-\documentclass{${0:article}}
+\documentclass{${1:article}}
 
 \usepackage[utf8]{inputenc}% ä in Titel
 
-\def\opttitle{$1}
+\def\opttitle{$2}
 \usepackage{import}\import{/home/lnlcflx/tex/}{article.tex}
 
 \begin{document}
 
 \maketitle
-${2:\tableofcontents}
+${3:\tableofcontents}
 
 \end{document}
 endsnippet
@@ -57,24 +57,29 @@ snippet ... "…" iA
 endsnippet
 
 
+context "math()"
 snippet => "⇒" Ai
 \implies
 endsnippet
 
+context "math()"
 snippet =< "⇐" Ai
 \impliedby
 endsnippet
 
 
+context "math()"
 snippet != "≠" iA
 \neq 
 endsnippet
 
 
+context "math()"
 snippet <= "⩽" iA
 \leqslant
 endsnippet
 
+context "math()"
 snippet >= "⩾" iA
 \geqslant 
 endsnippet
@@ -92,8 +97,9 @@ endsnippet
 
 
 priority 100
+context "math()"
 snippet -> "→" iA
-\to 
+\to
 endsnippet
 
 priority 200
@@ -108,35 +114,35 @@ snippet // "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet
 
-snippet / "Fraction" i
-\\frac{${VISUAL}}{$1}$0
-endsnippet
+#snippet / "Fraction" i
+#\\frac{${VISUAL}}{$1}$0
+#endsnippet
 
 context "math()"
 snippet bx "boxed"
 \\boxed{$0}
 endsnippet
 
-context "math()"
-snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
-\\frac{`!p snip.rv = match.group(1)`}{$1}$0
-endsnippet
+#context "math()"
+#snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
+#\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+#endsnippet
 
-priority 1000
-context "math()"
-snippet '^.*\)/' "() frac" wrA
-`!p
-stripped = match.string[:-1]
-depth = 0
-i = len(stripped) - 1
-while True:
-	if stripped[i] == ')': depth += 1
-	if stripped[i] == '(': depth -= 1
-	if depth == 0: break;
-	i-=1
-snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
-`{$1}$0
-endsnippet
+#priority 1000
+#context "math()"
+#snippet '^.*\)/' "() frac" wrA
+#`!p
+#stripped = match.string[:-1]
+#depth = 0
+#i = len(stripped) - 1
+#while True:
+	#if stripped[i] == ')': depth += 1
+	#if stripped[i] == '(': depth -= 1
+	#if depth == 0: break;
+	#i-=1
+#snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
+#`{$1}$0
+#endsnippet
 
 
 snippet sympy "sympyblock " w
