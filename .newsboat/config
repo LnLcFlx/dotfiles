@@ -1,7 +1,9 @@
 auto-reload yes
 reload-time 45
 browser chromium
-#article-sort-order date asc
+max-items 500
+always-display-description yes
+articlelist-format "%4i %f %D %6L  %?T?%-17T│ ?%t"
 
 unbind-key j
 unbind-key k
@@ -21,6 +23,9 @@ bind-key d pagedown
 bind-key u pageup
 bind-key s sort
 bind-key S rev-sort
+
+macro o set browser "newsboat-media" ; open-in-browser ; set browser $BROWSER
+macro O set browser "newsboat-media" ; open-in-browser-and-mark-read ; set browser $BROWSER
 
 color background            color223     default
 color listnormal            color250     default

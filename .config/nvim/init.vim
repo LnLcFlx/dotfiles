@@ -16,7 +16,6 @@ set nostartofline
 set ruler
 set laststatus=2
 set cursorline
-"set cursorcolumn
 set confirm
 set visualbell
 set t_vb=
@@ -37,7 +36,8 @@ set linebreak
 set sidescroll=1
 set whichwrap+=h,l
 set fillchars+=vert:│
-
+set foldmethod=syntax
+set nofoldenable
 
 " Keyboard
 let mapleader=" "
@@ -84,17 +84,19 @@ Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 
 Plug 'ap/vim-css-color'
-Plug 'ehamberg/vim-cute-python', {'branch': 'moresymbols'}
-Plug 'chrisbra/unicode.vim'
+"Plug 'ehamberg/vim-cute-python', {'branch': 'moresymbols'}
+"Plug 'chrisbra/unicode.vim'
 Plug 'ryanoasis/vim-devicons'
 
 Plug 'scrooloose/nerdcommenter'
 "Plug 'easymotion/vim-easymotion'
-Plug 'terryma/vim-multiple-cursors'
+"Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'skywind3000/asyncrun.vim'
 "Plug 'yggdroot/indentline'
+Plug 'Konfekt/FastFold'
+Plug 'tmhedberg/SimpylFold'
 
 Plug 'lervag/vimtex'
 Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
@@ -104,18 +106,17 @@ Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'dkarter/bullets.vim'
+"Plug 'dkarter/bullets.vim'
 
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-rhubarb'
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer --java-completer' }
 "Plug 'Konfekt/FastFold'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'chiel92/vim-autoformat'
 Plug 'w0rp/ale'
 
 Plug 'morhetz/gruvbox'
@@ -127,7 +128,11 @@ Plug 'Ron89/thesaurus_query.vim'
 Plug 'rhysd/vim-grammarous'
 
 Plug 'vim-scripts/Arduino-syntax-file'
+Plug 'baskerville/vim-sxhkdrc'
 call plug#end()
+
+
+let g:SimpylFold_docstring_preview = 1
 
 
 " General
@@ -154,41 +159,40 @@ autocmd FileType bib command -nargs=1 Doi2bib read !doi2bib <args>
 
 
 " Startify
-let g:startify_bookmarks= [{'c': '~/.config/nvim/init.vim'}, {'i': '~/install.md'}, {'e': '~/.local/share/konsole/Default.profile'}, {'t': '~/.tmux.conf'}]
+let g:startify_bookmarks= [{'c': '~/.config/nvim/init.vim'}]
 function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
-let g:startify_custom_header = [
-            \'                    ▒                    ',
-            \'    ██████████████▒▒▒▒▒ ██████████████   ',
-            \'    ██████████████▒▒▒▒▒▒██████████████   ',
-            \'      ██████████▒▒▒▒▒▒▒▒▒▒██████████     ',
-            \'      ██████████▒▒▒▒▒▒▒▒██████████       ',
-            \'      ██████████▒▒▒▒▒▒▒██████████        ',
-            \'      ██████████▒▒▒▒▒██████████▒▒        ',
-            \'      ██████████▒▒▒▒██████████▒▒▒▒▒      ',
-            \'    ▒▒██████████▒▒██████████▒▒▒▒▒▒▒▒▒    ',
-            \'  ▒▒▒▒██████████▒█████████▒▒▒▒▒▒▒▒▒▒▒▒▒  ',
-            \'    ▒▒████████████████▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒    ',
-            \'      ████████████████▒▒▒▒▒▒▒▒▒▒▒▒▒      ',
-            \'      ██████████████▒▓▓▓▒▓▓▓▓▓▓▓▓▓▓      ',
-            \'      ████████████▒▒▒▓▓▒▒▒▓▓▒▒▓▓  ▓▓     ',
-            \'      ██████████▒▒▒▒▓▓▒▒▒▓▓▒▒▓▓  ▓▓      ',
-            \'      ████████▒▒▒▒▒▒▓▓▓▒▒▓▓▓ ▓▓▓ ▓▓▓     ',
-            \'      ██████    ▒▒▒▒▒▒▒▒▒                ',
-            \'                  ▒▒▒▒▒                  ',
-            \'                    ▒                    '
-            \]
+let g:startify_custom_header = ["Leon's Neo Startpage"]
+            "\'                    ▒                    ',
+            "\'    ██████████████▒▒▒▒▒ ██████████████   ',
+            "\'    ██████████████▒▒▒▒▒▒██████████████   ',
+            "\'      ██████████▒▒▒▒▒▒▒▒▒▒██████████     ',
+            "\'      ██████████▒▒▒▒▒▒▒▒██████████       ',
+            "\'      ██████████▒▒▒▒▒▒▒██████████        ',
+            "\'      ██████████▒▒▒▒▒██████████▒▒        ',
+            "\'      ██████████▒▒▒▒██████████▒▒▒▒▒      ',
+            "\'    ▒▒██████████▒▒██████████▒▒▒▒▒▒▒▒▒    ',
+            "\'  ▒▒▒▒██████████▒█████████▒▒▒▒▒▒▒▒▒▒▒▒▒  ',
+            "\'    ▒▒████████████████▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒    ',
+            "\'      ████████████████▒▒▒▒▒▒▒▒▒▒▒▒▒      ',
+            "\'      ██████████████▒▓▓▓▒▓▓▓▓▓▓▓▓▓▓      ',
+            "\'      ████████████▒▒▒▓▓▒▒▒▓▓▒▒▓▓  ▓▓     ',
+            "\'      ██████████▒▒▒▒▓▓▒▒▒▓▓▒▒▓▓  ▓▓      ',
+            "\'      ████████▒▒▒▒▒▒▓▓▓▒▒▓▓▓ ▓▓▓ ▓▓▓     ',
+            "\'      ██████    ▒▒▒▒▒▒▒▒▒                ',
+            "\'                  ▒▒▒▒▒                  ',
+            "\'                    ▒                    '
+            "\]
 
 
 " LaTeX
 let g:vimtex_latexmk_progname = 'nvr'
-let g:vimtex_view_general_viewer = 'okular'
-let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
-let g:vimtex_view_general_options_latexmk = '--unique'
+let g:vimtex_view_method = 'zathura'
 let g:vimtex_fold_manual=1
 let g:vimtex_quickfix_ignore_all_warnings = 0
 let g:vimtex_quickfix_open_on_warning = 0
+let g:vimtex_fold_enabled = 1
 
 let g:formatdef_latexindent = '"latexindent"'
 let g:formatters_tex = ['latexindent']
@@ -216,10 +220,11 @@ autocmd FileType org,markdown :TableModeToggle
 
 " YCM
 let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_auto_trigger = 1
+
 if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
 endif
-
 au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 let g:ycm_semantic_triggers.tex = [
             \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
@@ -231,8 +236,6 @@ let g:ycm_semantic_triggers.tex = [
             \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
             \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
             \ ]
-
-let g:ycm_python_binary_path = 'python3'
 let g:ycm_semantic_triggers.python = ['re!(import\s+|from\s+(\w+\s+(import\s+(\w+,\s+)*)?)?)'] 
 
 
@@ -242,8 +245,10 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 let g:ale_set_balloons = 1
-let g:ale_hover_to_preview =1
-let g:ale_fixers = {'tex': ['latexindent'], 'python':['autopep8']}
+let g:ale_hover_to_preview = 1
+let b:ale_linters = {'python': ['flake8'], 'java': ['javalsp']}
+let g:ale_fixers = {'tex': ['latexindent'], 'python':['autopep8'], 'java': ['google_java_format']}
+let g:ale_java_google_java_format_options = '--aosp'
  let g:ale_set_highlights=0
 
 
@@ -273,12 +278,11 @@ autocmd TermOpen * set nospell
 
 
 " Appearance
-"color wal
+"colo wal
+"hi CursorLine term=Underline cterm=Underline ctermbg=None ctermfg=None
 colo gruvbox
 set bg=dark
-"let g:gruvbox_contrast_dark = 'soft'
-highlight Normal ctermbg=None
-set guifont=Iosevka\ Nerd\ Font:s12
+hi Normal ctermbg=None
 "let g:indentLine_char = '│'
 
 let g:airline#extensions#tabline#enabled = 1
@@ -318,7 +322,7 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-if !filereadable(".promptline.sh")
+if !filereadable("~/.promptline.sh")
     autocmd VimEnter * PromptlineSnapshot! ~/.promptline.sh airline
 endif
 "if !filereadable(".tmuxline.conf")

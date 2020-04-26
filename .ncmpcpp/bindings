@@ -39,8 +39,14 @@ def_key "x"
 def_key "x"
     delete_stored_playlist
 
-def_key "9"
+#def_key "9"
+#    show_last
+
+def_key "0"
     show_clock
+
+def_key "ß"
+    show_server_info
 
 def_key "."
     show_lyrics
